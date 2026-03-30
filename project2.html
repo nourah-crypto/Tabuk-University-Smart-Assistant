@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مساعد جامعة تبوك الذكي</title>
+
+<!-- خط رسمي جميل -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  font-family:'Cairo',sans-serif;
+  margin:0;
+  direction:rtl;
+  background:linear-gradient(135deg,#f6fbf6,#e9f5ea);
+  color:#1f1f1f;
+}
+
+header{
+  background:linear-gradient(90deg,#0d5c2d,#118c44);
+  color:white;
+  padding:24px;
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  text-align:center;
+  padding:70px 20px;
+}
+
+.robot{
+  font-size:75px;
+  margin-bottom:15px;
+}
+
+h1{
+  font-size:34px;
+  font-weight:700;
+  color:#0d5c2d;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  font-size:18px;
+  color:#555;
+  margin-bottom:35px;
+  line-height:1.8;
+}
+
+.main-btn{
+  background:linear-gradient(90deg,#0d5c2d,#118c44);
+  color:white;
+  border:none;
+  padding:16px 40px;
+  font-size:18px;
+  font-weight:600;
+  border-radius:14px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.main-btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:25px;
+ margin-top:60px;
+}
+
+.card{
+ background:white;
+ padding:35px 25px;
+ border-radius:20px;
+ box-shadow:0 8px 25px rgba(0,0,0,0.07);
+ transition:.3s;
+ cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 18px 35px rgba(0,0,0,0.15);
+}
+
+.card-icon{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.card-title{
+  font-size:20px;
+  font-weight:700;
+  color:#0d5c2d;
+  margin-bottom:10px;
+}
+
+.card-desc{
+  font-size:15px;
+  color:#666;
+  line-height:1.7;
+}
+
+footer{
+ margin-top:90px;
+ padding:25px;
+ text-align:center;
+ background:#f2f2f2;
+ color:#666;
+ font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+مساعد جامعة تبوك الذكي
+</header>
+
+<div class="container">
+
+<div class="robot">🤖</div>
+
+<h1>مرحباً بك</h1>
+
+<div class="subtitle">
+مساعد أكاديمي ذكي للإجابة عن الأنظمة واللوائح الخاصة بطلاب جامعة تبوك
+</div>
+
+<button class="main-btn" onclick="openChat()">ابدأ المحادثة</button>
+
+<div class="cards">
+
+<div class="card" onclick="ask('متى يعتبر الطالب منقطعاً عن الدراسة ويتم حذف جدوله؟')">
+<div class="card-icon">⚠️</div>
+<div class="card-title">الانقطاع عن الدراسة</div>
+<div class="card-desc">حذف الجدول وآلية إعادة القيد</div>
+</div>
+
+<div class="card" onclick="ask('كم عدد الفصول الدراسية التي يُسمح لطالب البكالوريوس بالاعتذار عنها؟')">
+<div class="card-icon">📌</div>
+<div class="card-title">الاعتذار عن الفصل</div>
+<div class="card-desc">عدد مرات الاعتذار والضوابط النظامية</div>
+</div>
+
+<div class="card" onclick="ask('هل يُعتد بالرسائل التي تصلني على بريدي الخاص من الجامعة أم البريد الجامعي فقط؟')">
+<div class="card-icon">📧</div>
+<div class="card-title">البريد الجامعي</div>
+<div class="card-desc">التبليغات الرسمية والمسؤولية القانونية</div>
+</div>
+
+<div class="card" onclick="ask('ما هي الخدمات والأنشطة التي تقدمها الجامعة للطلبة؟')">
+<div class="card-icon">🏫</div>
+<div class="card-title">الخدمات الطلابية</div>
+<div class="card-desc">الخدمات والأنشطة المقدمة للطلبة</div>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 | مشروع طلابي – جامعة تبوك
+</footer>
+
+<script>
+
+function openChat(){
+  if(window.chatbase){
+    window.chatbase("open");
+  }
+}
+
+function ask(text){
+  if(window.chatbase){
+    window.chatbase("open");
+    setTimeout(function(){
+      window.chatbase("sendMessage", text);
+    }, 500);
+  }
+}
+
+</script>
+
+<!-- سكربت Chatbase -->
+<script>
+(function(){
+if(!window.chatbase||window.chatbase("getState")!=="initialized"){
+window.chatbase=(...arguments)=>{
+if(!window.chatbase.q){window.chatbase.q=[]}
+window.chatbase.q.push(arguments)
+};
+window.chatbase=new Proxy(window.chatbase,{
+get(target,prop){
+if(prop==="q"){return target.q}
+return(...args)=>target(prop,...args)
+}
+})
+}
+const onLoad=function(){
+const script=document.createElement("script");
+script.src="https://www.chatbase.co/embed.min.js";
+script.id="-DEFADNfzXWEnIYzZeB41";
+script.domain="www.chatbase.co";
+document.body.appendChild(script)
+};
+if(document.readyState==="complete"){
+onLoad()
+}else{
+window.addEventListener("load",onLoad)
+}
+})();
+</script>
+
+</body>
+</html>
